@@ -1,4 +1,4 @@
-package utils;
+package biz.qh.automation.utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;

@@ -1,9 +1,10 @@
-package tests;
+package biz.qh.automation.tests;
 
 import org.testng.annotations.Test;
 
-import page_objects.LoginPage;
-import utils.DriverFactory;
+import biz.qh.automation.page_objects.LoginPage;
+import biz.qh.automation.utils.DriverFactory;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -25,7 +26,7 @@ public class UserLogin {
 
 	@AfterMethod
 	public void logOut() {
-		driver.close();
+		driver.quit();
 	}
 
 }

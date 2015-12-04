@@ -2,6 +2,7 @@ pps/src/UICatalog
 apps/built
 .classpath
 .project
+.settings/
 *.iml
 bin/
 .idea/

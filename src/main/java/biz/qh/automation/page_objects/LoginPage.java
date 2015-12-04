@@ -1,4 +1,4 @@
-package page_objects;
+package biz.qh.automation.page_objects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

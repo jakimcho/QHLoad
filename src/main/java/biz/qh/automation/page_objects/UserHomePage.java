@@ -1,4 +1,4 @@
-package page_objects;
+package biz.qh.automation.page_objects;
 
 public class UserHomePage {
 

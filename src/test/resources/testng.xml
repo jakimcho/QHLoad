@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Load Test">
+   <test name="User Login">
+    <classes>
+      <class name="biz.qh.automation.tests.UserLogin" />
+    </classes>
+  </test>
+</suite>	
