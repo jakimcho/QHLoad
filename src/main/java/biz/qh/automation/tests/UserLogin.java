@@ -1,5 +1,5 @@
 package biz.qh.automation.tests;
-
+import java.lang.*;
 import org.testng.annotations.Test;
 
 import biz.qh.automation.page_objects.LoginPage;
@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeMethod;
 public class UserLogin {
 	private WebDriver driver;
 
-	@Test(invocationCount = 5, threadPoolSize = 5)
+	@Test(invocationCount = 5, threadPoolSize = 20)
 	public void userLogin() {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.logIn("Administrator", "admin");
@@ -22,6 +22,7 @@ public class UserLogin {
 	public void openLoginPage() {
 		driver = DriverFactory.getDriver();
 		driver.get(LoginPage.URL);
+		
 	}
 
 	@AfterMethod

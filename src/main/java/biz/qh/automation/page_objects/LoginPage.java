@@ -3,6 +3,7 @@ package biz.qh.automation.page_objects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import biz.qh.automation.page_objects.*;
 
 public class LoginPage {
 	public static final String URL="http://qh.test.sf.archimed.bg/web/eprocess/login.aspx";
@@ -27,7 +28,7 @@ public class LoginPage {
 		this.loginButton.click();
 		
 		if (driver.getTitle().equals(UserHomePage.TITLE)){
-			return new UserHomePage();
+			return new UserHomePage(driver);
 		}
 		
 		return null;
