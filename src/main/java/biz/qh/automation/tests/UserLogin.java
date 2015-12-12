@@ -14,7 +14,7 @@ import org.testng.annotations.Parameters;
 public class UserLogin {
 	private WebDriver driver;
 
-	@Test(invocationCount = 1, threadPoolSize = 1)
+	@Test(invocationCount = 10, threadPoolSize = 5)
 	public void userLogin() {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.logIn("Administrator", "admin");

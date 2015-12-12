@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<suite name="Load Test">
-
-	<test name="User Login - HTML">
+<suite name="Load Test" verbose="1" parallel="tests" thread-count="10" >
+	<test name="User Login - HTML" parallel="instances" thread-count="5" group-by-instances="true">
 		<parameter name="browser" value="HTML" />
 		<classes>
 			<class name="biz.qh.automation.tests.UserLogin" />
 		</classes>
 	</test>
 
-	<test name="User Login - FireFox">
+	<test name="User Login - FireFox" parallel="instances" thread-count="5" >
 		<parameter name="browser" value="FIREFOX" />
 		<classes>
 			<class name="biz.qh.automation.tests.UserLogin" />

@@ -11,7 +11,7 @@ public abstract class DriverFactory {
 		WebDriver driver;
 		switch (brower) {
 		case HTML:
-			driver = new HtmlUnitDriver(true); 
+			driver = new HtmlUnitDriver(); 
 			System.out.println("Running HTMLDriver");
 			break;
 		case FIREFOX:
