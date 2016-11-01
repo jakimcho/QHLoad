@@ -1,37 +1,42 @@
 package biz.qh.automation.page_objects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import biz.qh.automation.page_objects.*;
+import org.testng.Assert;
+import org.apache.commons.io.FileUtils;
 
-public class LoginPage {
-	public static final String URL="http://qh.test.sf.archimed.bg/web/eprocess/login.aspx";
+import biz.qh.automation.page_objects.*;
+import static biz.qh.automation.utils.Log.logger;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+
+public class CasinoHomePage {
+	public static final String URL="https://www.ecasino.bg/";
 	
 	private WebDriver driver;
-	private WebElement loginForm;
-	private WebElement userName;
-	private WebElement userPassword;
-	private WebElement loginButton;
+	private WebElement bonusGameWindow;
+	private WebElement closeBonusGameButton;
+	private WebElement slotGamesContainer;
 	
-	public LoginPage(WebDriver driver){
+	public CasinoHomePage(WebDriver driver){
+		logger.log(Level.ALL, "Initializing CassinoHomePage");
 		this.driver = driver;
-		this.loginForm = driver.findElement(By.id("ctl00_cph_MainContent_ctl00_PnlLogin"));
-		this.userName = this.loginForm.findElement(By.id("ctl00_cph_MainContent_ctl00_TxtUserName"));
-		this.userPassword = this.loginForm.findElement(By.id("ctl00_cph_MainContent_ctl00_TxtPassword"));
-		this.loginButton = this.loginForm.findElement(By.id("ctl00_cph_MainContent_ctl00_BtnLogin"));
+		
+		this.bonusGameWindow = this.driver.findElement(By.className("easypayad"));
+		logger.log(Level.ALL, "Got element bonusGameWindow:");
+		this.closeBonusGameButton = this.driver.findElement(By.cssSelector(".easypayad > .frlXX"));
+		logger.log(Level.ALL, "Got element closeBonusGameButton:");
+		this.slotGamesContainer = this.driver.findElement(By.cssSelector("ul#slots_"));
 	}
 	
-	public UserHomePage logIn(String userName, String password){
-		this.userName.sendKeys(userName);
-		this.userPassword.sendKeys(password);
-		this.loginButton.click();
+	public void closeBonusGameWindow(){
+		this.closeBonusGameButton.click();
 		
-		if (driver.getTitle().equals(UserHomePage.TITLE)){
-			return new UserHomePage(driver);
-		}
-		
-		return null;
+		Assert.assertTrue(!this.bonusGameWindow.isDisplayed(), "Bonus game window is still displayed");
 	}
 
 }

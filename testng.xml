@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Demo Testing">
+  <test name="Close Bonus Window">
+  		<parameter name="browser" value="FIREFOX" />
+		<classes>
+			<class name="biz.qh.automation.tests.UserLogin" />
+		</classes>
+  </test>
+</suite>
