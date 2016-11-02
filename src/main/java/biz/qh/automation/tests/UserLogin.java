@@ -21,9 +21,9 @@ public class UserLogin {
 	@Test(invocationCount = 1, threadPoolSize = 1)
 	public void closeBonusGame() {
 		CasinoHomePage ecasinoPage = new CasinoHomePage(driver);
-		logger.log(Level.ALL, "ecasinoPage is openned");
+		logger.log(Level.INFO, "ecasinoPage is openned");
 		ecasinoPage.closeBonusGameWindow();
-		logger.log(Level.ALL, "Bonus game window is closed ");
+		logger.log(Level.INFO, "Bonus game window is closed ");
 	}
 
 	@BeforeMethod
