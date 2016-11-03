@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import biz.qh.automation.page_objects.CasinoHomePage;
 import biz.qh.automation.utils.Browsers;
 import biz.qh.automation.utils.DriverFactory;
+import biz.qh.automation.utils.SlotGame;
 
 import java.util.logging.Level;
 
@@ -24,6 +25,8 @@ public class UserLogin {
 		logger.log(Level.INFO, "ecasinoPage is openned");
 		ecasinoPage.closeBonusGameWindow();
 		logger.log(Level.INFO, "Bonus game window is closed ");
+		ecasinoPage.startSlotGameDemo(SlotGame.OCEAN_LEGENDS);
+		logger.log(Level.INFO, "Started Ocen Legends Demo ");
 	}
 
 	@BeforeMethod
@@ -31,6 +34,7 @@ public class UserLogin {
 	public void openLoginPage(String browser) {
 		driver = DriverFactory.getDriver(Browsers.valueOf(browser));
 		driver.get(CasinoHomePage.URL);
+		driver.manage().window().maximize();
 	}
 
 	@AfterMethod
