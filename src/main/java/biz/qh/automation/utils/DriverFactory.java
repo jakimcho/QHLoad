@@ -21,9 +21,9 @@ public abstract class DriverFactory {
 			break;
 		case FIREFOX:
 			logger.log(Level.INFO, "Running FirefoxDriver");
-			System.setProperty("webdriver.gecko.driver", "D:/webdrivers/FF/geckodriver.exe");
+			System.setProperty("webdriver.gecko.driver", "/Users/yakimfb/Programs/web-drivers/geckodriver");
 			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-			capabilities.setCapability("marionette", false);
+			capabilities.setCapability("marionette", true);
 			driver = new FirefoxDriver(capabilities); 
 			break;
 		default:

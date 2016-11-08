@@ -4,7 +4,7 @@
   <test name="Close Bonus Window">
   		<parameter name="browser" value="FIREFOX" />
 		<classes>
-			<class name="biz.qh.automation.tests.UserLogin" />
+			<class name="biz.qh.automation.tests.OceanLegendsGameTest" />
 		</classes>
   </test>
 </suite>
