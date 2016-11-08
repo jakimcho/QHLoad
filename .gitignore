@@ -21,4 +21,6 @@ buildNumber.properties
 .mvn/timing.properties
 
 /automattion.log
-/automattion.log.lck
+/automattion.log*
+test-output
+automattion.log*
