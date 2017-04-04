@@ -2,7 +2,6 @@ package biz.qh.automation.page_objects;
 
 import static biz.qh.automation.utils.Log.logger;
 
-import java.io.File;
 import java.util.logging.Level;
 
 import org.openqa.selenium.By;
@@ -14,37 +13,25 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
 
+import biz.qh.automation.utils.GameElements;
 import biz.qh.automation.utils.ScreenShots;
 
 /**
-*   TODO: DRY clicking buttons
-*   this class has different methods for clicking buttons
-*   which methods have one and the same code
-*   Need to create one general click method which will take a parameter
-*   the button that need to be clicked
-*/
+ * TODO: DRY clicking buttons this class has different methods for clicking
+ * buttons which methods have one and the same code Need to create one general
+ * click method which will take a parameter the button that need to be clicked
+ */
 
 public class SlotGamePageObject {
 	protected WebDriver driver;
 	protected WebDriverWait wait;
 	protected Screen screen;
-	protected Pattern playButtonImgPtn;
-	protected Pattern passButtonImgPtn;
-	protected Pattern gameMenuButtonImgPtn;
-	protected WebElement startButton;
-	protected WebElement gameMenuButton;
+	protected String imageDir = "./assets/slot_games/";
 
 	public SlotGamePageObject(WebDriver driver) {
 		this.driver = driver;
 		this.wait = new WebDriverWait(driver, 15);
 		this.screen = new Screen();
-		String filePath = new File("").getAbsolutePath();
-		filePath.concat("path to the property file");
-		logger.log(Level.INFO, "Current path  - " + filePath);
-		
-		this.playButtonImgPtn = new Pattern("./assets/slot_games/play_button.png");
-		this.passButtonImgPtn = new Pattern("./assets/slot_games/pass_button.png");
-		this.gameMenuButtonImgPtn = new Pattern("./assets/slot_games/game_menu_button.png");
 	}
 
 	public void playWithSound(boolean soundOn) {
@@ -52,71 +39,83 @@ public class SlotGamePageObject {
 		logger.log(Level.INFO, "Switching frames  - " + driver.getTitle());
 		driver.switchTo().defaultContent();
 		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.tagName("iframe")));
-		logger.log(Level.INFO, "Searching no sound button in Driver with title  - " + driver.getTitle());
 
-		if (soundOn) {
-			buttonToClick = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("withoutSound")));
-		} else {
-			buttonToClick = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("withSound")));
-		}
-		
+		GameElements element = soundOn ? GameElements.SOUND_YES_BUTTON : GameElements.SOUND_NO_BUTTON;
+		buttonToClick = wait
+				.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(element.getCssSelector())));
+
 		logger.log(Level.INFO, "Clicking on Sound " + buttonToClick.getText() + " Button");
 		buttonToClick.click();
-		
 	}
-	
-	public void clickPlay(){
-		try {
-			logger.log(Level.INFO, "Sikuli is checking fot start button to be displayed");
-			this.screen.wait(this.playButtonImgPtn.exact(), 5000);
-			this.gameMenuButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("buttonStart")));
-			logger.log(Level.INFO, "Start Button displayed " + gameMenuButton.isDisplayed());
-			
-			// Taking Screen shot -> need to be extract to a util method
-			ScreenShots.takeScreenShot(driver);
-			
-			logger.log(Level.INFO, "Clicking on the game menu button ");
-			this.gameMenuButton.click();
-		} catch (FindFailed e) {
-			logger.log(Level.INFO, "Sikuli was not able to locate game menu button" + e.getMessage());
-			e.printStackTrace();	
-		} 
+
+	public void clickElement(GameElements element) {
+		WebElement webElement = null;
+		webElement = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(element.getCssSelector())));
+		logger.log(Level.INFO, element + "element displayed " + webElement.isDisplayed());
+
+		ScreenShots.takeScreenShot(driver);
+
+		logger.log(Level.INFO, "Clicking on the " + element);
+		webElement.click();
 	}
-	
-	public void clickPass(){
+
+	public void waitElementToDisplay(GameElements element) {
 		try {
-			logger.log(Level.INFO, "Sikuli is checking fot pass button to be displayed");
-			this.screen.wait(this.passButtonImgPtn.exact(), 5000);
-			this.startButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("buttonStart")));
-			logger.log(Level.INFO, "Pass Button displayed " + startButton.isDisplayed());
-			
-			// Taking Screen shot -> need to be extract to a util method
-			ScreenShots.takeScreenShot(driver);
-			
-			logger.log(Level.INFO, "Clicking on the play button ");
-			this.startButton.click();
+			logger.log(Level.INFO, "Sikuli is checking for " + element + " element to be displayed");
+			this.screen.wait(element.getSikulyPtn().exact(), 15);
 		} catch (FindFailed e) {
-			logger.log(Level.INFO, "Sikuli was not able to locate play button" + e.getMessage());
-			e.printStackTrace();	
-		} 
+			logger.log(Level.INFO, "Sikuli was not able to locate " + element + " - trace -" + e.getMessage());
+		}
 	}
-	
-	public void clickSetting(){
+
+	public boolean isElementDeisplayed(Pattern ptn) {
 		try {
-			logger.log(Level.INFO, "Sikuli is checking fot settings button to be displayed");
-			this.screen.wait(this.gameMenuButtonImgPtn.exact(), 5000);
-			this.startButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("buttonGameMenu")));
-			logger.log(Level.INFO, "Pass Button displayed " + startButton.isDisplayed());
-			
-			// Taking Screen shot -> need to be extract to a util method
-			ScreenShots.takeScreenShot(driver);
-			
-			logger.log(Level.INFO, "Clicking on the play button ");
-			this.startButton.click();
+			logger.log(Level.INFO, "Sikuli is checking for " + ptn.getFilename() + " element to be displayed");
+			this.screen.wait(ptn, 15);
+			return true;
 		} catch (FindFailed e) {
-			logger.log(Level.INFO, "Sikuli was not able to locate play button" + e.getMessage());
-			e.printStackTrace();	
-		} 
+			logger.log(Level.INFO, "Sikuli was not able to locate " + ptn.getFilename() + " - trace -" + e.getMessage());
+			return false;
+		}
+	}
+
+	public void clickElement(GameElements element, boolean waitForElement) {
+		waitElementToDisplay(element);
+		clickElement(element);
+	}
+
+	public int currentCreditSize() {
+		WebElement element = this.driver.findElement(By.cssSelector(GameElements.FRAME_CREDIT.getCssSelector()));
+		return Integer.valueOf(element.getText());
+	}
+
+	public int finalBetSize() {
+		WebElement element = this.driver.findElement(By.cssSelector(GameElements.FRAME_TOTAL_BET.getCssSelector()));
+		return Integer.valueOf(element.getText());
+	}
+
+	public int winSize() {
+		WebElement element = this.driver.findElement(By.cssSelector(GameElements.FRAME_WIN.getCssSelector()));
+		return Integer.valueOf(element.getText());
+	}
+
+	public boolean isTitleDisplayed() {
+		return isElementDeisplayed(GameElements.GAME_TITLE.getSikulyPtn(this.imageDir));
+	}
+
+	public boolean hasLine() {
+		WebElement msgBat = wait.until(
+				ExpectedConditions.elementToBeClickable(By.cssSelector(GameElements.FREAME_MSG_BAR.getCssSelector())));
+		try {
+			while (msgBat.getText().contains("УСПЕХ!")) {
+				Thread.sleep(500);
+			}
+			
+			return msgBat.getText().contains("ЛИНИЯ ");
+		} catch (InterruptedException e) {
+			logger.log(Level.INFO, "Interuption happend while thread sleeped " + e.getMessage());
+			return false;
+		}
 	}
 
 }
